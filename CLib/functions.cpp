@@ -8,21 +8,24 @@ namespace Ainiku {
 		CInternetSession mySession((LPCTSTR)"aaa", 0);//如果不指定aaa(随便的一个字符串)的话debug模式下会报错
 		CHttpFile* htmlFile = NULL;
 		CString strLine, strHtml;
+		strHtml = _T("");
 		TCHAR sRecv[1024];//定义一个缓冲区
 		UINT CodePage = 65001;//CP_UTF8:65001 CP_ACP:0
 		TRY
 		{
 			htmlFile = (CHttpFile*)mySession.OpenURL(url);//打开连接
-														  //获取网页编码
+		//CString str;
+		//htmlFile->ReadString(str);											  //获取网页编码
 		while (htmlFile->ReadString(sRecv,1024))
 		{
 			//先用UTF8来进行转换，如果html页面编码是gbk或gb2312，转换后中文字符为
 			//乱码，但英文字符显示正常，我们判断html页码编码，通过寻找英文就可以了
+			//保存临时文本
 			int nBufferSize = MultiByteToWideChar(CP_UTF8, 0, (LPCSTR)sRecv, -1, NULL, 0);
 			wchar_t *pBuffer = new wchar_t[nBufferSize + 1];
 			memset(pBuffer,0,(nBufferSize + 1)*sizeof(wchar_t));
 			MultiByteToWideChar(CP_UTF8, 0, (LPCSTR)sRecv, -1 , pBuffer, nBufferSize*sizeof(wchar_t));
-			strHtml = pBuffer;
+			strHtml += pBuffer;
 			if (-1 != strHtml.Find(_T("charset=gbk")))
 			{
 				CodePage = 0;
@@ -61,9 +64,25 @@ namespace Ainiku {
 			}
 			delete pBuffer;
 		}
-		strHtml = _T("");
 		//获取网页源码
-		htmlFile = (CHttpFile*)mySession.OpenURL(url);//重新打开连接
+		//htmlFile = (CHttpFile*)mySession.OpenURL(url);//重新打开连接
+		//转换上面临时取出的文本为正确的编码
+		if (CodePage != 65001) {
+			int nLength = strHtml.GetLength();
+			int nBytes = WideCharToMultiByte(CodePage, 0, strHtml, nLength, NULL, 0, NULL, NULL);
+			char* VoicePath = new char[nBytes + 1];
+			memset(VoicePath, 0, nLength + 1);
+			WideCharToMultiByte(CodePage, 0, strHtml, nLength, VoicePath, nBytes, NULL, NULL);
+			strHtml = VoicePath;
+			delete VoicePath;
+			//int nBufferSize = MultiByteToWideChar(CodePage, 0,strHtml.GetBuffer(), -1, NULL, 0);
+			//wchar_t *pBuffer = new wchar_t[nBufferSize + 1];
+			//memset(pBuffer, 0, (nBufferSize + 1)*sizeof(wchar_t));
+			//MultiByteToWideChar(CodePage, 0, (LPCSTR)strHtml, -1, pBuffer, nBufferSize*sizeof(wchar_t));
+			//strHtml = CString(pBuffer);
+			//delete pBuffer;
+		}
+
 		while (htmlFile->ReadString(sRecv,1024))
 		{
 			// 编码转换，可解决中文乱码问题
@@ -78,7 +97,6 @@ namespace Ainiku {
 			//utf-8转为unicode,则用CP_UTF8
 			MultiByteToWideChar(CodePage, 0, (LPCSTR)sRecv, -1 , pBuffer, nBufferSize*sizeof(wchar_t));
 			strHtml += pBuffer;
-			strHtml += "\r\n";
 			delete pBuffer;
 		}
 		htmlFile->Close();
