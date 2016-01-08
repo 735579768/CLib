@@ -10,6 +10,13 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include "Clib.h"
 
+
+#ifdef _DEBUG
+#pragma comment(lib, "CLib_d.lib") 
+#else
+#pragma comment(lib, "Clib.lib") 
+#endif
 
 // TODO:  在此处引用程序需要的其他头文件

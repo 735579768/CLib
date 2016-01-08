@@ -20,3 +20,4 @@ public:
 extern CLIB_API int nCLib;
 
 CLIB_API int fnCLib(void);
+CLIB_API char* echo();

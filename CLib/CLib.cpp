@@ -13,6 +13,9 @@ CLIB_API int fnCLib(void)
 {
     return 42;
 }
+CLIB_API char* echo() {
+	return "这个是输出的内容";
+}
 
 // 这是已导出类的构造函数。
 // 有关类定义的信息，请参阅 CLib.h
