@@ -1,4 +1,7 @@
 #pragma once
+#include "stdafx.h"
+#include <fstream>
+#include "ANKString.h"
 namespace Ainiku {
 	class AINIKU_API CAnkLog {
 	public:

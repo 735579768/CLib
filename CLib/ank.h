@@ -12,4 +12,5 @@
 #include "functions.h"
 #include "AnkChar.h"
 #include "AnkLog.h"
+#include "ANKString.h"
 #endif

@@ -1,6 +1,3 @@
-#include "stdafx.h"
-#include <fstream>
-#include "AnkChar.h"
 #include "AnkLog.h"
 namespace Ainiku {
 	CAnkLog* CAnkLog::m_pInstance = NULL;
@@ -20,12 +17,20 @@ namespace Ainiku {
 		CString t_str = t.Format("%Y-%m-%d");
 		std::ofstream ofs(filePath+t_str+".log",std::ios::app);//建立ofstream对像。
 		if (ofs) {
-			CAnkChar u;
-			char* tem = u.WcharToChar(t_str1.GetBuffer(0));
-			chr=strcat(tem,chr);
-			chr = strcat(chr, "\n");
-			ofs.write(chr, strlen(chr));//将数据写入文件
-			ofs.close();//关闭ofstream对象。
+			try {
+				ANKString test="aaa";
+				test += "bbb";
+				ANKString *ank=new ANKString(t_str1);
+				ank->append( "测试");
+				char* tem = ank->getChar();
+				chr = strcat(tem, chr);
+				chr = strcat(chr, "\n");
+				ofs.write(chr, strlen(chr));//将数据写入文件
+				ofs.close();//关闭ofstream对象。
+			}
+			catch (...) {
+				
+			}
 		}
 
 		return true;

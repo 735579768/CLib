@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "AnkChar.h"
 using namespace std;
 namespace Ainiku {

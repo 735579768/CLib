@@ -1,6 +1,3 @@
-#include "stdafx.h"
-#include <iostream>
-using namespace std;
 #include "functions.h"
 namespace Ainiku {
 	AINIKU_API char* postUrl() {
@@ -170,15 +167,24 @@ namespace Ainiku {
 		return sResult;
 	}
 
-	char* wCharToChar(LPWSTR a1)
+	AINIKU_API char* WcharToChar(wchar_t* wc)
 	{
-		
-		int nLen = WideCharToMultiByte(CP_ACP, 0, a1, -1, NULL, 0, NULL, NULL);
-		char *s = new char[nLen + 1];
-		WideCharToMultiByte(CP_ACP, 0, a1, -1, s, nLen, NULL, NULL);
-		char *l;
-		l = s;
-		delete s;
-		return l;
+		int len = WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), NULL, 0, NULL, NULL);
+		char* m_char = new char[len + 1];
+		WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), m_char, len, NULL, NULL);
+		m_char[len] = '\0';
+		char* rechar = m_char;
+		delete[]m_char;
+		return rechar;
+	}
+	AINIKU_API wchar_t* CharToWchar(char* c)
+	{
+		int len = MultiByteToWideChar(CP_ACP, 0, c, strlen(c), NULL, 0);
+		wchar_t* m_wchar = new wchar_t[len + 1];
+		MultiByteToWideChar(CP_ACP, 0, c, strlen(c), m_wchar, len);
+		m_wchar[len] = '\0';
+		wchar_t* rewchar = m_wchar;
+		delete[]m_wchar;
+		return rewchar;
 	}
 }
