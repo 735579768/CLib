@@ -10,5 +10,6 @@ namespace Ainiku {
 	AINIKU_API CString getUrl2(CString url);
 	AINIKU_API wstring string2Wstring(string sToMatch);
 	AINIKU_API string wstring2string(wstring sToMatch);
+	AINIKU_API char* wCharToChar(LPWSTR a1);
 }
 #endif

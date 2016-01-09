@@ -165,4 +165,16 @@ namespace Ainiku {
 #endif  
 		return sResult;
 	}
+
+	char* wCharToChar(LPWSTR a1)
+	{
+		
+		int nLen = WideCharToMultiByte(CP_ACP, 0, a1, -1, NULL, 0, NULL, NULL);
+		char *s = new char[nLen + 1];
+		WideCharToMultiByte(CP_ACP, 0, a1, -1, s, nLen, NULL, NULL);
+		char *l;
+		l = s;
+		delete s;
+		return l;
+	}
 }

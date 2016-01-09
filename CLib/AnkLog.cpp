@@ -1,5 +1,6 @@
 #include "AnkLog.h"
 namespace Ainiku {
+	CAnkLog* CAnkLog::m_pInstance = NULL;
 	CAnkLog::CAnkLog() {
 		filePath = "./log";
 		CAnkLog::m_pInstance = NULL;
@@ -11,10 +12,18 @@ namespace Ainiku {
 		CAnkLog *log=CAnkLog::getInstance();
 		//写日志
 		CTime t = CTime::GetCurrentTime();
-		CString t_str = t.Format("%Y-%m-%d %H:%M:%S");
-		std::ofstream ofs(t_str+".log");//建立ofstream对像。
-		ofs.write(chr, strlen(chr));//将数据写入文件
-		ofs.close();//关闭ofstream对象。
+		CString t_str1 = t.Format("%Y-%m-%d %H:%M:%S");
+		CString t_str = t.Format("%Y-%m-%d");
+		std::ofstream ofs(t_str+".log",std::ios::app);//建立ofstream对像。
+		if (ofs) {
+			CAnkChar u;
+			char* tem = u.WcharToChar(t_str1.GetBuffer(0));
+			chr=strcat(tem,chr);
+			chr = strcat(chr, "\n");
+			ofs.write(chr, strlen(chr));//将数据写入文件
+			ofs.close();//关闭ofstream对象。
+		}
+
 		return true;
 	}
     CAnkLog* CAnkLog::getInstance() {
