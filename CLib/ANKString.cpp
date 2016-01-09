@@ -22,23 +22,28 @@ namespace Ainiku {
 	{
 	}
 	ANKString::ANKString(const ANKString& ankstr) {
+		Release();
 		m_char = ankstr.m_char;
 	}
 	ANKString::ANKString(char* c)
 	{
+		Release();
 		m_char = c;
 	}
 	ANKString::ANKString(std::string str)
 	{
+		Release();
 		ANKString(str.c_str());
 	}
 	ANKString::ANKString(const char* c)
 	{
+		Release();
 		m_char = new char[strlen(c) + 1];
 		strcpy(m_char, c);
 	}
 	ANKString::ANKString(CString str)
 	{
+		Release();
 	#ifdef _UNICODE
 			m_char = WcharToChar(str.GetBuffer(0));
 	#else
@@ -51,18 +56,16 @@ namespace Ainiku {
 	}
 	char* ANKString::WcharToChar(wchar_t* wc)
 	{
-		//Release();
 		int len = WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), NULL, 0, NULL, NULL);
-		m_char = new char[len + 1];
+		m_char = new char[len + 10];
 		WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), m_char, len, NULL, NULL);
 		m_char[len] = '\0';
 		return m_char;
 	}
 	wchar_t* ANKString::CharToWchar(char* c)
 	{
-		//Release();
 		int len = MultiByteToWideChar(CP_ACP, 0, c, strlen(c), NULL, 0);
-		m_wchar = new wchar_t[len + 1];
+		m_wchar = new wchar_t[len + 10];
 		MultiByteToWideChar(CP_ACP, 0, c, strlen(c), m_wchar, len);
 		m_wchar[len] = '\0';
 		return m_wchar;
@@ -88,7 +91,7 @@ namespace Ainiku {
 		return m_wchar;
 	}
 	ANKString* ANKString::append(const char* c) {
-		char* tembuff = new char[strlen(c) + 1];
+		char* tembuff = new char[strlen(c) + 10];
 		strcpy(tembuff, c);
 		strcat(m_char, tembuff);
 		delete[] tembuff;
@@ -97,7 +100,7 @@ namespace Ainiku {
 	}
 	//char*赋值给对象
 	ANKString& ANKString::operator+=(char*  c){
-		strcat(m_char,c);
+		m_char=strcat(m_char,c);
 		return *this;
 	}
 	ANKString& ANKString::operator+=(ANKString*  anks) {
@@ -105,9 +108,14 @@ namespace Ainiku {
 		return *this;
 	}
 	ANKString& ANKString::operator+=(const char* c) {
-		char* tembuff = new char[strlen(c) + 1];
-		strcpy(tembuff, c);
-		strcat(m_char,tembuff);
+		int bytelen = strlen(c) + strlen(m_char) + 10;
+		char* tembuff = new char[bytelen];
+		strcpy(tembuff, m_char);
+		strcat(tembuff, c);
+		//重置m_char指针,否则析构函数不能释放
+		Release();
+		m_char = new char[bytelen];
+		strcpy(m_char, tembuff);
 		delete[] tembuff;
 		tembuff = NULL;
 		return *this;
