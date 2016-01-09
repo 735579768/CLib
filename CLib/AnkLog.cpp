@@ -13,6 +13,7 @@ namespace Ainiku {
 		//写日志
 		CTime t = CTime::GetCurrentTime();
 		CString t_str1 = t.Format("%Y-%m-%d %H:%M:%S");
+		t_str1 += ":  ";
 		CString t_str = t.Format("%Y-%m-%d");
 		std::ofstream ofs(t_str+".log",std::ios::app);//建立ofstream对像。
 		if (ofs) {
