@@ -91,20 +91,40 @@ namespace Ainiku {
 		return m_wchar;
 	}
 	ANKString* ANKString::append(const char* c) {
-		char* tembuff = new char[strlen(c) + 10];
-		strcpy(tembuff, c);
-		strcat(m_char, tembuff);
+		int bytelen = strlen(c) + strlen(m_char) + 10;
+		char* tembuff = new char[bytelen];
+		strcpy(tembuff,m_char);
+		strcat(tembuff, c);
+		Release();
+		m_char = new char[bytelen];
+		strcpy(m_char, tembuff);
 		delete[] tembuff;
 		tembuff = NULL;
 		return this;
 	}
 	//char*赋值给对象
 	ANKString& ANKString::operator+=(char*  c){
-		m_char=strcat(m_char,c);
+		int bytelen = strlen(c) + strlen(m_char) + 10;
+		char* tembuff = new char[bytelen];
+		strcpy(tembuff, m_char);
+		strcat(tembuff, c);
+		Release();
+		m_char = new char[bytelen];
+		strcpy(m_char,tembuff);
+		delete[] tembuff;
+		tembuff = NULL;
 		return *this;
 	}
 	ANKString& ANKString::operator+=(ANKString*  anks) {
-		strcat(m_char,anks->m_char);
+		int bytelen = strlen(anks->m_char) + strlen(m_char) + 10;
+		char* tembuff = new char[bytelen];
+		strcpy(tembuff, m_char);
+		strcat(tembuff, anks->m_char);
+		Release();
+		m_char = new char[bytelen];
+		m_char = strcpy(m_char, tembuff);
+		delete[] tembuff;
+		tembuff = NULL;
 		return *this;
 	}
 	ANKString& ANKString::operator+=(const char* c) {
