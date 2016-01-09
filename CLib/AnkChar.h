@@ -1,6 +1,4 @@
 #pragma once
-#include "stdafx.h"
-using namespace std;
 namespace Ainiku {
 	class AINIKU_API CAnkChar
 	{

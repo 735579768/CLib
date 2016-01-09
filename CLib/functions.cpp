@@ -1,3 +1,6 @@
+#include "stdafx.h"
+#include <iostream>
+using namespace std;
 #include "functions.h"
 namespace Ainiku {
 	AINIKU_API char* postUrl() {

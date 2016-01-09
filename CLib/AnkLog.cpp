@@ -1,3 +1,6 @@
+#include "stdafx.h"
+#include <fstream>
+#include "AnkChar.h"
 #include "AnkLog.h"
 namespace Ainiku {
 	CAnkLog* CAnkLog::m_pInstance = NULL;

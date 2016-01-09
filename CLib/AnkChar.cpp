@@ -1,4 +1,6 @@
+#include "stdafx.h"
 #include "AnkChar.h"
+using namespace std;
 namespace Ainiku {
 	/**
 	 *C++多字节与宽字节间的转换(wchar_t与char转换)
