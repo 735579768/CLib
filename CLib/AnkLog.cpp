@@ -2,7 +2,7 @@
 namespace Ainiku {
 	CAnkLog* CAnkLog::m_pInstance = NULL;
 	CAnkLog::CAnkLog() {
-		filePath = "./log";
+		filePath = "";
 		CAnkLog::m_pInstance = NULL;
 	}
 	CAnkLog::~CAnkLog() {
@@ -15,7 +15,7 @@ namespace Ainiku {
 		CString t_str1 = t.Format("%Y-%m-%d %H:%M:%S");
 		t_str1 += ":  ";
 		CString t_str = t.Format("%Y-%m-%d");
-		std::ofstream ofs(t_str+".log",std::ios::app);//建立ofstream对像。
+		std::ofstream ofs(filePath+t_str+".log",std::ios::app);//建立ofstream对像。
 		if (ofs) {
 			CAnkChar u;
 			char* tem = u.WcharToChar(t_str1.GetBuffer(0));

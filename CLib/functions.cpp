@@ -102,6 +102,7 @@ namespace Ainiku {
 		}
 		END_CATCH
 	}
+
 	AINIKU_API CString getUrl2(CString url) {
 		if (url == "") { return ""; }
 		CInternetSession mySession((LPCTSTR)"aaa", 0);//如果不指定aaa(随便的一个字符串)的话debug模式下会报错
