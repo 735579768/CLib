@@ -160,12 +160,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ank.h" />
+    <ClInclude Include="AnkChar.h" />
+    <ClInclude Include="AnkLog.h" />
     <ClInclude Include="CLib.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnkChar.cpp" />
+    <ClCompile Include="AnkLog.cpp" />
     <ClCompile Include="CLib.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>

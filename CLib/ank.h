@@ -10,4 +10,6 @@
 
 #include "CLib.h"
 #include "functions.h"
+#include "AnkChar.h"
+#include "AnkLog.h"
 #endif

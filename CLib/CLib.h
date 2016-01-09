@@ -9,9 +9,6 @@ namespace Ainiku {
 		// TODO:  在此添加您的方法。
 	};
 
-	extern AINIKU_API int nCLib;
-
-	AINIKU_API int fnCLib(void);
 	AINIKU_API char* echo();
 }
 #endif
