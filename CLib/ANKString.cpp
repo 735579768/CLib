@@ -91,43 +91,51 @@ namespace Ainiku {
 		return m_wchar;
 	}
 	ANKString* ANKString::append(const char* c) {
-		int bytelen = strlen(c) + strlen(m_char) + 10;
+		int bytelen = strlen(c)  + 10;
 		char* tembuff = new char[bytelen];
-		strcpy(tembuff,m_char);
-		strcat(tembuff, c);
-		Release();
-		m_char = new char[bytelen];
-		strcpy(m_char, tembuff);
+		strcpy(tembuff,c);
+		lianjie(tembuff);
 		delete[] tembuff;
 		tembuff = NULL;
 		return this;
 	}
 	//char*赋值给对象
 	ANKString& ANKString::operator+=(char*  c){
-		int bytelen = strlen(c) + strlen(m_char) + 10;
-		char* tembuff = new char[bytelen];
-		strcpy(tembuff, m_char);
-		strcat(tembuff, c);
-		Release();
-		m_char = new char[bytelen];
-		strcpy(m_char,tembuff);
-		delete[] tembuff;
-		tembuff = NULL;
+		lianjie(c);
 		return *this;
 	}
 	ANKString& ANKString::operator+=(ANKString*  anks) {
-		int bytelen = strlen(anks->m_char) + strlen(m_char) + 10;
+		int bytelen = strlen(anks->m_char) + 10;
 		char* tembuff = new char[bytelen];
-		strcpy(tembuff, m_char);
-		strcat(tembuff, anks->m_char);
-		Release();
-		m_char = new char[bytelen];
-		m_char = strcpy(m_char, tembuff);
+		strcpy(tembuff, anks->m_char);
+		lianjie(tembuff);
 		delete[] tembuff;
 		tembuff = NULL;
 		return *this;
 	}
 	ANKString& ANKString::operator+=(const char* c) {
+		int bytelen = strlen(c) +1;
+		char* tembuff = new char[bytelen];
+		strcpy(tembuff,c);
+		lianjie(tembuff);
+		delete[] tembuff;
+		tembuff = NULL;
+		return *this;
+	}
+	ANKString& ANKString::operator+=(CString str) {
+		int bytelen = 0;
+		#ifdef _UNICODE
+			char* chr1 = WcharToChar(str.GetBuffer(0));
+			lianjie(chr1);
+		#else
+			lianjie((char*)str.GetBuffer(0));
+		#endif
+		return *this;
+	}
+	/**
+	 *连接字符串
+	 */
+	void ANKString::lianjie(char* c) {
 		int bytelen = strlen(c) + strlen(m_char) + 10;
 		char* tembuff = new char[bytelen];
 		strcpy(tembuff, m_char);
@@ -138,15 +146,6 @@ namespace Ainiku {
 		strcpy(m_char, tembuff);
 		delete[] tembuff;
 		tembuff = NULL;
-		return *this;
-	}
-	ANKString& ANKString::operator+=(CString str) {
-		#ifdef _UNICODE
-				strcat(m_char,WcharToChar(str.GetBuffer(0)));
-		#else
-				strcat(m_char,(char*)str.GetBuffer(0));
-		#endif
-		return *this;
 	}
 	//char*赋值给对象
 //	ANKString ANKString::operator=(char*  c) {

@@ -30,6 +30,8 @@ namespace Ainiku {
 		//ANKString operator=(const ANKString ankstr);
 		void Release();//释放资源
 	private:
+		//连接m_char字符串
+		void ANKString::lianjie(char* c);
 		char* m_char;
 		wchar_t* m_wchar;
 	};
