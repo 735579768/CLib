@@ -19,21 +19,27 @@ namespace Ainiku {
 		ANKString* append(const char* c);
 		//重载操作符
 		ANKString& operator+=(char* c);
-		ANKString& operator+=(ANKString* anks);
+		ANKString& operator+=(ANKString &anks);
 		ANKString& operator+=(const char* c);
 		ANKString& operator+=(CString str);
 
-		//ANKString operator=(char* c);
-		//ANKString operator=(ANKString* anks);
-		//ANKString operator=(const char* c);
-		//ANKString operator=(CString str);
-		//ANKString operator=(const ANKString ankstr);
+		ANKString& operator+(char* c);
+		ANKString& operator+(const char* c);
+		ANKString& operator+(ANKString &anks);
+		ANKString& operator+(CString str);
+
 		void Release();//释放资源
 	private:
+		//初始化数据
+		void init();
 		//连接m_char字符串
 		void ANKString::lianjie(char* c);
 		char* m_char;
 		wchar_t* m_wchar;
+		//定义缓冲区
+		char* m_buff;
+		wchar_t* m_wbuff;
+
 	};
 }
 

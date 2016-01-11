@@ -140,7 +140,7 @@ namespace Ainiku {
 		int iWLen = MultiByteToWideChar(CP_ACP, 0, sToMatch.c_str(), sToMatch.size(), 0, 0); // 计算转换后宽字符串的长度。（不包含字符串结束符）  
 		wchar_t *lpwsz = new wchar_t[iWLen + 1];
 		MultiByteToWideChar(CP_ACP, 0, sToMatch.c_str(), sToMatch.size(), lpwsz, iWLen); // 正式转换。  
-		lpwsz[iWLen] = L'/0';
+		lpwsz[iWLen] = L'\0';
 		wstring wsToMatch(lpwsz);
 		delete[]lpwsz;
 #endif  

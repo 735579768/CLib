@@ -16,39 +16,50 @@ namespace Ainiku {
 	/*比较两个字符串  wcscmp()    strcmp()
 	/*具体参数详见www.linuxidc.com*/
 	////////////////////////////////////////////////////////////////////////////////////
-	ANKString::ANKString()
-		:m_char(NULL)
-		, m_wchar(NULL)
+	ANKString::ANKString():m_char(NULL),m_wchar(NULL)
 	{
 	}
 	ANKString::ANKString(const ANKString& ankstr) {
-		Release();
+		init();
 		m_char = ankstr.m_char;
 	}
 	ANKString::ANKString(char* c)
 	{
-		Release();
+		init();
 		m_char = c;
 	}
 	ANKString::ANKString(std::string str)
 	{
-		Release();
+		init();
 		ANKString(str.c_str());
 	}
 	ANKString::ANKString(const char* c)
 	{
-		Release();
+		init();
 		m_char = new char[strlen(c) + 1];
 		strcpy(m_char, c);
 	}
 	ANKString::ANKString(CString str)
 	{
-		Release();
+		init();
 	#ifdef _UNICODE
-			m_char = WcharToChar(str.GetBuffer(0));
+			char* tem=WcharToChar(str.GetBuffer(0));
+			int bytelen = strlen(tem) + 10;
+			m_char = new char[bytelen] {0};
+			strcpy(m_char,tem);
+
 	#else
-			m_char = (char*)str.GetBuffer(0);
+			char* tem = (char*)str.GetBuffer(0);
+			int bytelen = strlen(tem) + 10;
+			m_char = new char[bytelen] {0};
+			strcpy(m_char, tem);
 	#endif
+	}
+	void ANKString::init() {
+		m_char = NULL;
+		m_wchar = NULL;
+		m_buff = NULL;
+		m_wbuff = NULL;
 	}
 	ANKString::~ANKString()
 	{
@@ -56,19 +67,23 @@ namespace Ainiku {
 	}
 	char* ANKString::WcharToChar(wchar_t* wc)
 	{
+		delete[] m_buff;
+		m_buff = NULL;
 		int len = WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), NULL, 0, NULL, NULL);
-		m_char = new char[len + 10]{0};
-		WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), m_char, len, NULL, NULL);
-		m_char[len] = '\0';
-		return m_char;
+		m_buff = new char[len + 10]{0};
+		WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), m_buff, len, NULL, NULL);
+		m_buff[len] = '\0';
+		return m_buff;
 	}
 	wchar_t* ANKString::CharToWchar(char* c)
 	{
+		delete[] m_wbuff;
+		m_wbuff = NULL;
 		int len = MultiByteToWideChar(CP_ACP, 0, c, strlen(c), NULL, 0);
-		m_wchar = new wchar_t[len + 10]{0};
-		MultiByteToWideChar(CP_ACP, 0, c, strlen(c), m_wchar, len);
-		m_wchar[len] = '\0';
-		return m_wchar;
+		m_wbuff = new wchar_t[len + 10]{0};
+		MultiByteToWideChar(CP_ACP, 0, c, strlen(c), m_wbuff, len);
+		m_wbuff[len] = '\0';
+		return m_wbuff;
 	}
 	void ANKString::Release()
 	{
@@ -81,6 +96,14 @@ namespace Ainiku {
 		{
 			delete[] m_wchar;
 			m_wchar = NULL;
+		}
+		if (m_buff) {
+			delete[] m_buff;
+			m_buff = NULL;
+		}
+		if (m_wbuff) {
+			delete[] m_wbuff;
+			m_wbuff = NULL;
 		}
 	}
 	char* ANKString::getChar() {
@@ -104,10 +127,10 @@ namespace Ainiku {
 		lianjie(c);
 		return *this;
 	}
-	ANKString& ANKString::operator+=(ANKString*  anks) {
-		int bytelen = strlen(anks->m_char) + 10;
+	ANKString& ANKString::operator+=(ANKString  &anks) {
+		int bytelen = strlen(anks.m_char) + 10;
 		char* tembuff = new char[bytelen] {0};
-		strcpy(tembuff, anks->m_char);
+		strcpy(tembuff, anks.m_char);
 		lianjie(tembuff);
 		delete[] tembuff;
 		tembuff = NULL;
@@ -135,6 +158,38 @@ namespace Ainiku {
 	/**
 	 *连接字符串
 	 */
+	ANKString& ANKString::operator+(const char* c) {
+		int bytelen = strlen(c) + 1;
+		char* tembuff = new char[bytelen] {0};
+		strcpy(tembuff, c);
+		lianjie(tembuff);
+		delete[] tembuff;
+		tembuff = NULL;
+		return *this;
+	}
+	ANKString& ANKString::operator+(CString str) {
+		int bytelen = 0;
+#ifdef _UNICODE
+		char* chr1 = WcharToChar(str.GetBuffer(0));
+		lianjie(chr1);
+#else
+		lianjie((char*)str.GetBuffer(0));
+#endif
+		return *this;
+	}
+	ANKString& ANKString::operator+(ANKString  &anks) {
+		int bytelen = strlen(anks.m_char) + 10;
+		char* tembuff = new char[bytelen] {0};
+		strcpy(tembuff, anks.m_char);
+		lianjie(tembuff);
+		delete[] tembuff;
+		tembuff = NULL;
+		return *this;
+	}
+	ANKString& ANKString::operator+(char*  c) {
+		lianjie(c);
+		return *this;
+	}
 	void ANKString::lianjie(char* c) {
 		int bytelen = strlen(c) + strlen(m_char) + 10;
 		char* tembuff = new char[bytelen]{0};
@@ -147,6 +202,7 @@ namespace Ainiku {
 		delete[] tembuff;
 		tembuff = NULL;
 	}
+
 	//char*赋值给对象
 //	ANKString ANKString::operator=(char*  c) {
 //		strcat(m_char, c);

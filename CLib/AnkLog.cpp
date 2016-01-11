@@ -18,9 +18,14 @@ namespace Ainiku {
 		std::ofstream ofs(filePath+t_str+".log",std::ios::app);//建立ofstream对像。
 		if (ofs) {
 			try {
+				CString str2 = "cstring 测试";
+				char *chr1 = "char 测试";
+				ANKString str3 = "ankstring 测试";
+
 				ANKString test=t_str1;
-				test += chr;
-				test += "\n";
+				test += chr1;
+				test += str2;
+				test = test +str3;
 				char* tem = test.getChar();
 				ofs.write(tem, strlen(tem));//将数据写入文件
 				ofs.close();//关闭ofstream对象。
