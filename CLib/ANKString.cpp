@@ -173,7 +173,7 @@ namespace Ainiku {
 	}
 	ANKString& ANKString::operator+=(const char* c) {
 		int bytelen = strlen(c) + 1;
-		char* tembuff = new char[bytelen] {0};
+		char* tembuff = const_cast<char*>(c);
 		strcpy(tembuff, c);
 		lianjie(tembuff);
 		delete[] tembuff;
