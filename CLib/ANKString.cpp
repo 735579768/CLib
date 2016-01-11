@@ -39,7 +39,7 @@ namespace Ainiku {
 	{
 		init();
 	#ifdef _UNICODE
-			char* tem=WcharToChar(str.GetBuffer(0));
+			char* tem=WcharToChar(str.GetBuffer(0),CP_ACP);
 			int bytelen = strlen(tem) + 10;
 			m_char = new char[bytelen] {0};
 			strcpy(m_char,tem);
@@ -61,23 +61,23 @@ namespace Ainiku {
 	{
 		Release();
 	}
-	char* ANKString::WcharToChar(wchar_t* wc)
+	char* ANKString::WcharToChar(wchar_t* wc,int codepage=CP_ACP)
 	{
 		delete[] m_buff;
 		m_buff = NULL;
-		int len = WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), NULL, 0, NULL, NULL);
+		int len = WideCharToMultiByte(codepage, 0, wc, wcslen(wc), NULL, 0, NULL, NULL);
 		m_buff = new char[len + 10]{0};
-		WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), m_buff, len, NULL, NULL);
+		WideCharToMultiByte(codepage, 0, wc, wcslen(wc), m_buff, len, NULL, NULL);
 		m_buff[len] = '\0';
 		return m_buff;
 	}
-	wchar_t* ANKString::CharToWchar(char* c)
+	wchar_t* ANKString::CharToWchar(char* c, int codepage = CP_ACP)
 	{
 		delete[] m_wbuff;
 		m_wbuff = NULL;
-		int len = MultiByteToWideChar(CP_ACP, 0, c, strlen(c), NULL, 0);
+		int len = MultiByteToWideChar(codepage, 0, c, strlen(c), NULL, 0);
 		m_wbuff = new wchar_t[len + 10]{0};
-		MultiByteToWideChar(CP_ACP, 0, c, strlen(c), m_wbuff, len);
+		MultiByteToWideChar(codepage, 0, c, strlen(c), m_wbuff, len);
 		m_wbuff[len] = '\0';
 		return m_wbuff;
 	}
@@ -167,7 +167,7 @@ namespace Ainiku {
 	ANKString& ANKString::operator+(CString str) {
 		int bytelen = 0;
 #ifdef _UNICODE
-		char* chr1 = WcharToChar(str.GetBuffer(0));
+		char* chr1 = WcharToChar(str.GetBuffer(0),CP_ACP);
 		lianjie(chr1);
 #else
 		lianjie((char*)str.GetBuffer(0));

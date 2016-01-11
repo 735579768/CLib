@@ -12,8 +12,8 @@ namespace Ainiku {
 		ANKString(CString str);
 		ANKString(std::string str);
 		virtual~ANKString();
-		char* WcharToChar(wchar_t* wc);//宽字节转单字节
-		wchar_t* CharToWchar(char* c); //单字节转宽字节
+		char* WcharToChar(wchar_t* wc,int codepage);//宽字节转单字节
+		wchar_t* CharToWchar(char* c, int codepage); //单字节转宽字节
 		char* getChar();
 		wchar_t* getWChar();
 		ANKString* append(const char* c);
