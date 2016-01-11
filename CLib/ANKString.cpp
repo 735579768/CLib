@@ -118,25 +118,24 @@ namespace Ainiku {
 		tembuff = NULL;
 		return this;
 	}
-
 	//重载函数
 	ANKString& ANKString::operator+=(char*  c){
 		lianjie(c);
+		return *this;
+	}
+	ANKString& ANKString::operator+=(const char* c) {
+		int bytelen = strlen(c) + 1;
+		char* tembuff = new char[bytelen] {0};
+		strcpy(tembuff, c);
+		lianjie(tembuff);
+		delete[] tembuff;
+		tembuff = NULL;
 		return *this;
 	}
 	ANKString& ANKString::operator+=(ANKString  &anks) {
 		int bytelen = strlen(anks.m_char) + 10;
 		char* tembuff = new char[bytelen] {0};
 		strcpy(tembuff, anks.m_char);
-		lianjie(tembuff);
-		delete[] tembuff;
-		tembuff = NULL;
-		return *this;
-	}
-	ANKString& ANKString::operator+=(const char* c) {
-		int bytelen = strlen(c) +1;
-		char* tembuff = new char[bytelen] {0};
-		strcpy(tembuff,c);
 		lianjie(tembuff);
 		delete[] tembuff;
 		tembuff = NULL;
@@ -155,6 +154,10 @@ namespace Ainiku {
 	/**
 	 *连接字符串
 	 */
+	ANKString& ANKString::operator+(char*  c) {
+		lianjie(c);
+		return *this;
+	}
 	ANKString& ANKString::operator+(const char* c) {
 		int bytelen = strlen(c) + 1;
 		char* tembuff = new char[bytelen] {0};
@@ -162,16 +165,6 @@ namespace Ainiku {
 		lianjie(tembuff);
 		delete[] tembuff;
 		tembuff = NULL;
-		return *this;
-	}
-	ANKString& ANKString::operator+(CString str) {
-		int bytelen = 0;
-#ifdef _UNICODE
-		char* chr1 = WcharToChar(str.GetBuffer(0),CP_ACP);
-		lianjie(chr1);
-#else
-		lianjie((char*)str.GetBuffer(0));
-#endif
 		return *this;
 	}
 	ANKString& ANKString::operator+(ANKString  &anks) {
@@ -183,10 +176,17 @@ namespace Ainiku {
 		tembuff = NULL;
 		return *this;
 	}
-	ANKString& ANKString::operator+(char*  c) {
-		lianjie(c);
-		return *this;
+	ANKString& ANKString::operator+(CString str) {
+				int bytelen = 0;
+		#ifdef _UNICODE
+				char* chr1 = WcharToChar(str.GetBuffer(0),CP_ACP);
+				lianjie(chr1);
+		#else
+				lianjie((char*)str.GetBuffer(0));
+		#endif
+				return *this;
 	}
+
 	//内部字符串连接
 	void ANKString::lianjie(char* c) {
 		int bytelen = strlen(c) + strlen(m_char) + 10;
