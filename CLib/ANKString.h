@@ -17,6 +17,14 @@ namespace Ainiku {
 		char* getChar();
 		wchar_t* getWChar();
 		ANKString* append(const char* c);
+		//Ìæ»»×Ö·û´®
+		char* replace(char* findstr, char* replacestr);
+
+		//²éÕÒ×Ö·û´®
+		int find(char* findstr);
+		int find(const char* findstr);
+		int find(ANKString findstr);
+		int find(CString findstr);
 		//ÖØÔØ²Ù×÷·û
 		ANKString& operator+=(char* c);
 		ANKString& operator+=(ANKString &anks);

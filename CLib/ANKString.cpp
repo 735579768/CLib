@@ -1,5 +1,7 @@
 #include "ANKString.h"
+#include <string>
 namespace Ainiku {
+	using namespace std;
 	/**
 	*C++多字节与宽字节间的转换(wchar_t与char转换)
 	使用方法
@@ -118,6 +120,52 @@ namespace Ainiku {
 		tembuff = NULL;
 		return this;
 	}
+	//字符串操作
+	char* ANKString::replace( char* findstr, char* replacestr) {
+		string s1,s2, s3;
+		s1 = m_char;
+		s2 = string(findstr);
+		s3 = string(replacestr);
+		string::size_type pos = 0;
+		string::size_type a = s2.size();
+		string::size_type b = s3.size();
+		while ((pos = s1.find(s2, pos)) != string::npos)
+		{
+			s1.replace(pos, a, s3);
+			pos += b;
+		}
+		char* tembuff=const_cast<char*>(s1.c_str());
+		delete[] m_char;
+		m_char = NULL;
+		m_char = new char[strlen(tembuff) + 10]{ 0 };
+		strcpy(m_char,tembuff);
+		return m_char;
+	}
+	int ANKString::find(const char* findstr) {
+		return find((char*)findstr);	
+	}
+	int ANKString::find(ANKString findstr) {
+		return find(findstr.m_char);
+	}
+	int ANKString::find(CString findstr) {
+		#ifdef _UNICODE
+				char* chr1 = WcharToChar(findstr.GetBuffer(0));
+				return find(chr1);
+		#else
+				return find((char*)str.GetBuffer(0));
+		#endif
+	}
+	int ANKString::find(char* findstr) {
+		string str = m_char;
+		string find_str = findstr;
+		size_t find_str_postion;
+		find_str_postion = str.find(find_str);
+		if (find_str_postion != string::npos) {
+			return find_str_postion;
+		}else{
+			return -1;
+		}
+	}
 	//重载函数
 	ANKString& ANKString::operator+=(char*  c){
 		lianjie(c);
@@ -142,7 +190,6 @@ namespace Ainiku {
 		return *this;
 	}
 	ANKString& ANKString::operator+=(CString str) {
-		int bytelen = 0;
 		#ifdef _UNICODE
 			char* chr1 = WcharToChar(str.GetBuffer(0));
 			lianjie(chr1);
