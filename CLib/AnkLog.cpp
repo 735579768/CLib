@@ -26,6 +26,7 @@ namespace Ainiku {
 				test += chr1;
 				test += str2;
 				test = test +str3;
+				test += "\n";
 				char* tem = test.getChar();
 				ofs.write(tem, strlen(tem));//将数据写入文件
 				ofs.close();//关闭ofstream对象。
