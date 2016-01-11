@@ -3,10 +3,6 @@ namespace Ainiku {
 	/**
 	*C++多字节与宽字节间的转换(wchar_t与char转换)
 	使用方法
-	WCHAR* wc=findData.cFileName;
-	ANKString u;
-	char* c=u.WcharToChar(wc);
-	cout<<c<<endl;
 	*/
 	/////////////////////////////////////////////////////////////////////////////////////
 	/*字符类型        wchar_t     char
@@ -122,7 +118,8 @@ namespace Ainiku {
 		tembuff = NULL;
 		return this;
 	}
-	//char*赋值给对象
+
+	//重载函数
 	ANKString& ANKString::operator+=(char*  c){
 		lianjie(c);
 		return *this;
@@ -190,6 +187,7 @@ namespace Ainiku {
 		lianjie(c);
 		return *this;
 	}
+	//内部字符串连接
 	void ANKString::lianjie(char* c) {
 		int bytelen = strlen(c) + strlen(m_char) + 10;
 		char* tembuff = new char[bytelen]{0};
@@ -202,33 +200,4 @@ namespace Ainiku {
 		delete[] tembuff;
 		tembuff = NULL;
 	}
-
-	//char*赋值给对象
-//	ANKString ANKString::operator=(char*  c) {
-//		strcat(m_char, c);
-//		return *this;
-//	}
-//	ANKString ANKString::operator=(ANKString*  anks) {
-//		strcat(m_char, anks->m_char);
-//		return *this;
-//	}
-//	ANKString ANKString::operator=(const char* c) {
-//		m_char = new char[strlen(c) + 1];
-//		return *this;
-//	}
-//	ANKString ANKString::operator=(const ANKString ankstr) {
-//		if (ankstr.m_char != m_char) {
-//			m_char = new char[strlen(ankstr.m_char) + 1];
-//			strcpy(m_char,ankstr.m_char);
-//		}
-//		return *this;
-//	}
-//	ANKString ANKString::operator=(CString str) {
-//#ifdef _UNICODE
-//		strcpy(m_char, WcharToChar(str.GetBuffer(0)));
-//#else
-//		strcpy(m_char, (char*)str.GetBuffer(0));
-//#endif
-//		return *this;
-//	}
 }
