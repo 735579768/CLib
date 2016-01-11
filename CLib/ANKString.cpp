@@ -57,7 +57,7 @@ namespace Ainiku {
 	char* ANKString::WcharToChar(wchar_t* wc)
 	{
 		int len = WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), NULL, 0, NULL, NULL);
-		m_char = new char[len + 10];
+		m_char = new char[len + 10]{0};
 		WideCharToMultiByte(CP_ACP, 0, wc, wcslen(wc), m_char, len, NULL, NULL);
 		m_char[len] = '\0';
 		return m_char;
@@ -65,7 +65,7 @@ namespace Ainiku {
 	wchar_t* ANKString::CharToWchar(char* c)
 	{
 		int len = MultiByteToWideChar(CP_ACP, 0, c, strlen(c), NULL, 0);
-		m_wchar = new wchar_t[len + 10];
+		m_wchar = new wchar_t[len + 10]{0};
 		MultiByteToWideChar(CP_ACP, 0, c, strlen(c), m_wchar, len);
 		m_wchar[len] = '\0';
 		return m_wchar;
@@ -92,7 +92,7 @@ namespace Ainiku {
 	}
 	ANKString* ANKString::append(const char* c) {
 		int bytelen = strlen(c)  + 10;
-		char* tembuff = new char[bytelen];
+		char* tembuff = new char[bytelen] {0};
 		strcpy(tembuff,c);
 		lianjie(tembuff);
 		delete[] tembuff;
@@ -106,7 +106,7 @@ namespace Ainiku {
 	}
 	ANKString& ANKString::operator+=(ANKString*  anks) {
 		int bytelen = strlen(anks->m_char) + 10;
-		char* tembuff = new char[bytelen];
+		char* tembuff = new char[bytelen] {0};
 		strcpy(tembuff, anks->m_char);
 		lianjie(tembuff);
 		delete[] tembuff;
@@ -115,7 +115,7 @@ namespace Ainiku {
 	}
 	ANKString& ANKString::operator+=(const char* c) {
 		int bytelen = strlen(c) +1;
-		char* tembuff = new char[bytelen];
+		char* tembuff = new char[bytelen] {0};
 		strcpy(tembuff,c);
 		lianjie(tembuff);
 		delete[] tembuff;
@@ -137,12 +137,12 @@ namespace Ainiku {
 	 */
 	void ANKString::lianjie(char* c) {
 		int bytelen = strlen(c) + strlen(m_char) + 10;
-		char* tembuff = new char[bytelen];
+		char* tembuff = new char[bytelen]{0};
 		strcpy(tembuff, m_char);
 		strcat(tembuff, c);
 		//重置m_char指针,否则析构函数不能释放
 		Release();
-		m_char = new char[bytelen];
+		m_char = new char[bytelen] {0};
 		strcpy(m_char, tembuff);
 		delete[] tembuff;
 		tembuff = NULL;
