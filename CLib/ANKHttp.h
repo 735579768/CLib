@@ -11,6 +11,7 @@ namespace Ainiku {
 	private:
 		CString decode(CHttpFile* htmlFile);
 		CInternetSession* m_interSession;
+		//CString m_strCookies;
 	};
 
 }

@@ -17,14 +17,21 @@ namespace Ainiku {
 		//if (reurl == "") { reurl = "/"; }
 		CHttpFile* htmlFile = (CHttpFile*)myconn->OpenRequest(CHttpConnection::HTTP_VERB_GET,reurl);
 		htmlFile->AddRequestHeaders(_T("User-Agent: Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"));
+		htmlFile->AddRequestHeaders(_T("Referer: "+url));
 		//发送Http请求：
 		try {
 			//发送请求到HTTP
 			htmlFile->SendRequest();
 			restr = decode(htmlFile);
 			//取cookies
-			//CString strCookie;
-			//m_interSession->GetCookie(host,NULL,strCookie);
+			CString cookiename = "";
+			CString strCookie;
+			//下面可以取到cookie但是在debug下面出错中断
+			BOOL bRes = CInternetSession::GetCookie(url, NULL, strCookie);
+			if (!bRes) {
+				int errcode=::GetLastError();
+			}
+			//m_interSession->GetCookie(host,cookiename,m_strCookies);
 		}
 		catch (CInternetException* pEx)
 		{
@@ -54,6 +61,7 @@ namespace Ainiku {
 		//if (reurl == "") { reurl = "/"; }
 		CHttpFile* htmlFile = (CHttpFile*)myconn->OpenRequest(CHttpConnection::HTTP_VERB_POST,reurl);
 		htmlFile->AddRequestHeaders(_T("User-Agent: Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"));
+		htmlFile->AddRequestHeaders(_T("Referer: " + url));
 		//发送Http请求：
 		try {
 			//发送请求到HTTP
