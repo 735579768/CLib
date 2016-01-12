@@ -172,12 +172,8 @@ namespace Ainiku {
 		return *this;
 	}
 	ANKString& ANKString::operator+=(const char* c) {
-		int bytelen = strlen(c) + 1;
 		char* tembuff = const_cast<char*>(c);
-		strcpy(tembuff, c);
 		lianjie(tembuff);
-		delete[] tembuff;
-		tembuff = NULL;
 		return *this;
 	}
 	ANKString& ANKString::operator+=(ANKString  &anks) {
@@ -189,7 +185,7 @@ namespace Ainiku {
 		tembuff = NULL;
 		return *this;
 	}
-	ANKString& ANKString::operator+=(CString str) {
+	ANKString& ANKString::operator+=(CString &str) {
 		#ifdef _UNICODE
 			char* chr1 = WcharToChar(str.GetBuffer(0));
 			lianjie(chr1);
@@ -206,12 +202,8 @@ namespace Ainiku {
 		return *this;
 	}
 	ANKString& ANKString::operator+(const char* c) {
-		int bytelen = strlen(c) + 1;
-		char* tembuff = new char[bytelen] {0};
-		strcpy(tembuff, c);
+		char* tembuff = const_cast<char*>(c);
 		lianjie(tembuff);
-		delete[] tembuff;
-		tembuff = NULL;
 		return *this;
 	}
 	ANKString& ANKString::operator+(ANKString  &anks) {
@@ -223,7 +215,7 @@ namespace Ainiku {
 		tembuff = NULL;
 		return *this;
 	}
-	ANKString& ANKString::operator+(CString str) {
+	ANKString& ANKString::operator+(CString &str) {
 				int bytelen = 0;
 		#ifdef _UNICODE
 				char* chr1 = WcharToChar(str.GetBuffer(0),CP_ACP);

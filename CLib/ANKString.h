@@ -29,12 +29,12 @@ namespace Ainiku {
 		ANKString& operator+=(char* c);
 		ANKString& operator+=(ANKString &anks);
 		ANKString& operator+=(const char* c);
-		ANKString& operator+=(CString str);
+		ANKString& operator+=(CString &str);
 
 		ANKString& operator+(char* c);
 		ANKString& operator+(const char* c);
 		ANKString& operator+(ANKString &anks);
-		ANKString& operator+(CString str);
+		ANKString& operator+(CString &str);
 
 		void Release();//ÊÍ·Å×ÊÔ´
 	private:

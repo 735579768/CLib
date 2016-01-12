@@ -18,6 +18,7 @@ int main()
 	str.replace("b","a");
 	str.replace("ÎÒ°®","Äã");
 	CString chr = "Äã";
+	str += chr;
 	//²éÕÒ×Ö·û´®
 	cout << str.find(chr) << endl;
 	cout << str.getChar() << endl;
