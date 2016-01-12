@@ -8,9 +8,8 @@
 // CLIB_API 函数视为是从 DLL 导入的，而此 DLL 则将用此宏定义的
 // 符号视为是被导出的。
 
-#include "CLib.h"
 #include "functions.h"
-#include "AnkChar.h"
 #include "AnkLog.h"
 #include "ANKString.h"
+#include "Access.h"
 #endif

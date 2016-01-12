@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin</OutDir>
+    <OutDir>..\bin\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <IncludePath>..\CLib;$(IncludePath)</IncludePath>
     <LibraryPath>..\bin;$(LibraryPath)</LibraryPath>
@@ -81,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin</OutDir>
+    <OutDir>..\bin\</OutDir>
     <IncludePath>..\CLib;$(IncludePath)</IncludePath>
     <LibraryPath>..\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

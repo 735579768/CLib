@@ -1,3 +1,5 @@
+#ifndef __LIB_ANKSTRING_H__
+#define __LIB_ANKSTRING_H__
 #pragma once
 #include "stdafx.h"
 #include <string>
@@ -50,5 +52,5 @@ namespace Ainiku {
 
 	};
 }
-
+#endif
 

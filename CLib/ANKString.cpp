@@ -1,5 +1,4 @@
 #include "ANKString.h"
-#include <string>
 namespace Ainiku {
 	using namespace std;
 	/**

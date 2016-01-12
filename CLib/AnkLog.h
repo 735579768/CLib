@@ -1,3 +1,5 @@
+#ifndef __LIB_ANKLOG_H__
+#define __LIB_ANKLOG_H_
 #pragma once
 #include "stdafx.h"
 #include <fstream>
@@ -15,3 +17,4 @@ namespace Ainiku {
 		~CAnkLog(void);
 	};
 }
+#endif
