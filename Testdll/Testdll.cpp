@@ -23,7 +23,7 @@ int main()
 	cout << str.find(chr) << endl;
 	cout << str.getChar() << endl;
 	ANKHttp myhttp;
-	ANKString urlcon = myhttp.getUrl("https://www.baidu.com");
+	ANKString urlcon = myhttp.getUrl("https://www.ruzhouba.com");
 	cout << urlcon.getChar() << endl;
 	getchar();
     return 0;

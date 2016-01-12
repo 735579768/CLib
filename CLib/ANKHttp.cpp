@@ -10,16 +10,20 @@ namespace Ainiku {
 		ANKString ustr = url;
 		Url ur(ustr.getChar());
 		//连接到Http服务器
-		CHttpConnection* myconn = (CHttpConnection*)m_interSession->GetHttpConnection(_T("www.baidu.com"));
+		CHttpConnection* myconn = (CHttpConnection*)m_interSession->GetHttpConnection(CString(ur.GetHost().c_str()));
 		//打开Http请求：
-		CHttpFile* htmlFile = (CHttpFile*)myconn->OpenRequest(CHttpConnection::HTTP_VERB_GET, _T("/index.html"));
+		CString reurl = ur.GetQuery().c_str();
+		//if (reurl == "") { reurl = "/"; }
+		CHttpFile* htmlFile = (CHttpFile*)myconn->OpenRequest(CHttpConnection::HTTP_VERB_GET,reurl);
 		htmlFile->AddRequestHeaders(_T("User-Agent: Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"));
 		//发送Http请求：
 		try {
 			//发送请求到HTTP
 			htmlFile->SendRequest();
 			restr = decode(htmlFile);
-			//m_interSession->InternetGetCookie();
+			//取cookies
+			CString strCookie;
+			m_interSession->GetCookie(url,NULL,strCookie);
 		}
 		catch (CInternetException* pEx)
 		{
@@ -40,10 +44,14 @@ namespace Ainiku {
 		if (m_interSession == NULL) {
 		 m_interSession=new	CInternetSession();
 		}
+		ANKString ustr = url;
+		Url ur(ustr.getChar());
 		//连接到Http服务器
-		CHttpConnection* myconn = (CHttpConnection*)m_interSession->GetHttpConnection(_T("www.baidu.com"));
+		CHttpConnection* myconn = (CHttpConnection*)m_interSession->GetHttpConnection(CString(ur.GetHost().c_str()));
 		//打开Http请求：
-		CHttpFile* htmlFile = (CHttpFile*)myconn->OpenRequest(CHttpConnection::HTTP_VERB_POST,_T( "/index.html"));
+		CString reurl = ur.GetQuery().c_str();
+		//if (reurl == "") { reurl = "/"; }
+		CHttpFile* htmlFile = (CHttpFile*)myconn->OpenRequest(CHttpConnection::HTTP_VERB_POST,reurl);
 		htmlFile->AddRequestHeaders(_T("User-Agent: Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"));
 		//发送Http请求：
 		try {
