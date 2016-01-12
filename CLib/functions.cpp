@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "assert.h"
 namespace Ainiku {
 	AINIKU_API char* postUrl() {
 		return "这个是post输出的内容";
@@ -186,5 +187,100 @@ namespace Ainiku {
 		wchar_t* rewchar = m_wchar;
 		delete[]m_wchar;
 		return rewchar;
+	}
+	/*从字符串的左边截取n个字符*/
+	AINIKU_API char * left(char *dst, char *src, int n)
+	{
+		char *p = src;
+		char *q = dst;
+		int len = strlen(src);
+		if (n>len) n = len;
+		while (n--) *(q++) = *(p++);
+		*(q++) = '\0'; /*有必要吗？很有必要*/
+		return dst;
+	}
+
+	/*从字符串的中间截取n个字符*/
+	AINIKU_API char * mid(char *dst, char *src, int n, int m) /*n为长度，m为位置*/
+	{
+		char *p = src;
+		char *q = dst;
+		int len = strlen(src);
+		if (n>len) n = len - m;    /*从第m个到最后*/
+		if (m<0) m = 0;    /*从第一个开始*/
+		if (m>len) return NULL;
+		p += m;
+		while (n--) *(q++) = *(p++);
+		*(q++) = '\0'; /*有必要吗？很有必要*/
+		return dst;
+	}
+
+	/*从字符串的右边截取n个字符*/
+	AINIKU_API char * right(char *dst, char *src, int n)
+	{
+		char *p = src;
+		char *q = dst;
+		int len = strlen(src);
+		if (n>len) n = len;
+		p += (len - n);   /*从右边第n个字符开始，到0结束，很巧啊*/
+		while (*(q++) = *(p++));
+		return dst;
+	}
+	AINIKU_API unsigned char ToHex(unsigned char x)
+	{
+		return  x > 9 ? x + 55 : x + 48;
+	}
+
+	AINIKU_API unsigned char FromHex(unsigned char x)
+	{
+		unsigned char y;
+		if (x >= 'A' && x <= 'Z') y = x - 'A' + 10;
+		else if (x >= 'a' && x <= 'z') y = x - 'a' + 10;
+		else if (x >= '0' && x <= '9') y = x - '0';
+		else assert(0);
+		return y;
+	}
+
+	AINIKU_API std::string UrlEncode(const std::string& str)
+	{
+		std::string strTemp = "";
+		size_t length = str.length();
+		for (size_t i = 0; i < length; i++)
+		{
+			if (isalnum((unsigned char)str[i]) ||
+				(str[i] == '-') ||
+				(str[i] == '_') ||
+				(str[i] == '.') ||
+				(str[i] == '~'))
+				strTemp += str[i];
+			else if (str[i] == ' ')
+				strTemp += "+";
+			else
+			{
+				strTemp += '%';
+				strTemp += ToHex((unsigned char)str[i] >> 4);
+				strTemp += ToHex((unsigned char)str[i] % 16);
+			}
+		}
+		return strTemp;
+	}
+
+	AINIKU_API std::string UrlDecode(const std::string& str)
+	{
+		std::string strTemp = "";
+		size_t length = str.length();
+		for (size_t i = 0; i < length; i++)
+		{
+			if (str[i] == '+') strTemp += ' ';
+			else if (str[i] == '%')
+			{
+				assert(i + 2 < length);
+				unsigned char high = FromHex((unsigned char)str[++i]);
+				unsigned char low = FromHex((unsigned char)str[++i]);
+				strTemp += high * 16 + low;
+			}
+			else strTemp += str[i];
+		}
+		return strTemp;
 	}
 }

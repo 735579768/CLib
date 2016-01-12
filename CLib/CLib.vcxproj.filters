@@ -36,6 +36,12 @@
     <ClInclude Include="Access.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ANKHttp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Url.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -51,6 +57,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Access.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ANKHttp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Url.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

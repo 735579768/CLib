@@ -164,13 +164,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ank.h" />
+    <ClInclude Include="ANKHttp.h" />
     <ClInclude Include="AnkLog.h" />
     <ClInclude Include="ANKString.h" />
     <ClInclude Include="Access.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Url.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ANKHttp.cpp" />
     <ClCompile Include="AnkLog.cpp" />
     <ClCompile Include="ANKString.cpp" />
     <ClCompile Include="Access.cpp" />
@@ -189,6 +192,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="functions.cpp" />
+    <ClCompile Include="Url.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

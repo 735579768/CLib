@@ -12,4 +12,5 @@
 #include "AnkLog.h"
 #include "ANKString.h"
 #include "Access.h"
+#include "ANKHttp.h"
 #endif

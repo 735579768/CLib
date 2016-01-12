@@ -22,6 +22,9 @@ int main()
 	//²éÕÒ×Ö·û´®
 	cout << str.find(chr) << endl;
 	cout << str.getChar() << endl;
+	ANKHttp myhttp;
+	ANKString urlcon = myhttp.getUrl("https://www.baidu.com");
+	cout << urlcon.getChar() << endl;
 	getchar();
     return 0;
 }
