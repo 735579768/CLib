@@ -10,7 +10,8 @@ namespace Ainiku {
 		ANKString ustr = url;
 		Url ur(ustr.getChar());
 		//连接到Http服务器
-		CHttpConnection* myconn = (CHttpConnection*)m_interSession->GetHttpConnection(CString(ur.GetHost().c_str()));
+		CString host = ur.GetHost().c_str();
+		CHttpConnection* myconn = (CHttpConnection*)m_interSession->GetHttpConnection(host);
 		//打开Http请求：
 		CString reurl = ur.GetQuery().c_str();
 		//if (reurl == "") { reurl = "/"; }
@@ -22,8 +23,8 @@ namespace Ainiku {
 			htmlFile->SendRequest();
 			restr = decode(htmlFile);
 			//取cookies
-			CString strCookie;
-			m_interSession->GetCookie(url,NULL,strCookie);
+			//CString strCookie;
+			//m_interSession->GetCookie(host,NULL,strCookie);
 		}
 		catch (CInternetException* pEx)
 		{
