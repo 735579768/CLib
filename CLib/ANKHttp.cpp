@@ -1,11 +1,14 @@
 #include "ANKHttp.h"
 #include "Url.h"
 #include "ANKString.h"
+#include <afxinet.h>
+#define afxCurrentAppName "aaa"
 namespace Ainiku {
 	CString ANKHttp::getUrl(CString url) {
 		CString restr = "";
 		if (m_interSession == NULL) {
 			m_interSession = new CInternetSession(_T("ANKHTTP"), 0);
+			//m_interSession = new CInternetSession();
 		}
 		ANKString ustr = url;
 		Url ur(ustr.getChar());
@@ -27,7 +30,7 @@ namespace Ainiku {
 			CString cookiename = "";
 			CString strCookie;
 			//下面可以取到cookie但是在debug下面出错中断
-			BOOL bRes = CInternetSession::GetCookie(url, NULL, strCookie);
+			BOOL bRes = m_interSession->GetCookie(url, NULL, strCookie);
 			if (!bRes) {
 				int errcode=::GetLastError();
 			}
